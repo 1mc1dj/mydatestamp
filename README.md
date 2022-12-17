@@ -12,9 +12,28 @@ DXの遅れた日本では、サラリーマンが書類に印鑑を捺印する
 
 ## 使い方
 
+Rustの開発環境がインストールしておいてください。
 cargo buildでビルドして、どっかPATHが通るところに置いてください。
 
-
+```
+$ git clone https://github.com/1mc1dj/mydatestamp.git
+$ cd mydatestamp
+$ cargo build --release
+$ cp target/release/mydatestamp.exe ~/myscripts/ (Pathが通っているところにコピー、Cygwinとかの場合）
 ```
 
+次に、ホームディレクトリ（$HOMEのパスが通ってるところ）に、.mydatestampというファイルを作って、
+
 ```
+山本商事
+営業3部6課
+山下一郎
+```
+とか書いて、UTF8で保存しておいてください。
+
+そうすれば、以下のように、実行すると、svgファイルが作成されます。
+
+```
+$ mydatestamp.exe test.svg
+```
+
