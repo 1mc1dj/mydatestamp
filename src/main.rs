@@ -1,28 +1,25 @@
 
 use std::env;
-use std::path;
 use svg::Document;
 use svg::node::element::Path;
-use svg::node::element::Text;
 use svg::node::element::path::Data;
-use chrono::{Utc, Local, DateTime, Date};
+use chrono::Local;
 use std::fs::File;
-use std::io::{self, BufReader};
+use std::io::BufReader;
 use std::io::prelude::*;
-
 
 fn main() {
     // check args
     let args: Vec<String> = env::args().collect();
-    if (args.len() <= 1) {
+    if args.len() <= 1 {
         println!("usage: {} [output file]", args[0]);
         return;
     }
-    
+
     // read config files
     let home = env::var("HOME").unwrap();
     let config_file_path  = format!("{}/.mydatestamp", home);
-    if (std::path::Path::new(&config_file_path).exists() == false) {
+    if std::path::Path::new(&config_file_path).exists() == false {
         println!("prepare property file(~/.mydatestamp)");
         return;
     }
@@ -45,24 +42,24 @@ fn main() {
     let filename = &args[1];
 
     let center_circle = Data::new()
-    .move_to((35, 10))
-    .cubic_curve_by(((-25,0),(-25,25),(-25,25)))
-    .cubic_curve_by(((0,25),(25,25),(25,25)))
-    .cubic_curve_by(((25,0),(25,-25),(25,-25)))
-    .cubic_curve_by(((0,-25),(-25,-25),(-25,-25))).close();
+    .move_to((105, 30))
+    .cubic_curve_by(((-75,0),(-75,75),(-75,75)))
+    .cubic_curve_by(((0,75),(75,75),(75,75)))
+    .cubic_curve_by(((75,0),(75,-75),(75,-75)))
+    .cubic_curve_by(((0,-75),(-75,-75),(-75,-75))).close();
 
     let top_line = Data::new()
-    .move_to((11,28))
-    .line_by((48,00));
+    .move_to((11*3,28*3))
+    .line_by((48*3,0));
 
     let bottom_line = Data::new()
-    .move_to((11,42))
-    .line_by((48,00));
+    .move_to((11*3,42*3))
+    .line_by((48*3,00));
 
     let center_circle_path = Path::new()
     .set("fill", "none")
     .set("stroke", "red")
-    .set("stroke-width", 1.2)
+    .set("stroke-width", 3.6)
     .set("d", center_circle);
 
     let top_line_path = center_circle_path.clone()
@@ -75,41 +72,41 @@ fn main() {
     let text = svg::node::Text::new(date_str);
     let date_text = svg::node::element::Text::new()
     .set("font-family", "Lucida-Console")
-    .set("font-size", 7.5)
+    .set("font-size", 23)
     .set("fill", "red")
-    .set("x",12)
-    .set("y",37)
+    .set("x",12*3)
+    .set("y",37*3)
     .add(text);
 
     let top_text = svg::node::Text::new(top_line_str);
     let top_text_label = svg::node::element::Text::new()
     .set("font-family", "sans-serif")
-    .set("font-size", 6)
+    .set("font-size", 18)
     .set("fill", "red")
-    .set("x",20)
-    .set("y",20)
+    .set("x",63)
+    .set("y",60)
     .add(top_text);
 
     let top_text2 = svg::node::Text::new(top_line2_str);
     let top_text_label2 = svg::node::element::Text::new()
     .set("font-family", "sans-serif")
-    .set("font-size", 5.5)
+    .set("font-size", 16.5)
     .set("fill", "red")
-    .set("x",14)
-    .set("y",26)
+    .set("x",46)
+    .set("y",78)
     .add(top_text2);
 
     let bottom_text = svg::node::Text::new(username_str);
     let bottom_label = svg::node::element::Text::new()
     .set("font-family", "serif")
-    .set("font-size", 8.5)
+    .set("font-size", 21)
     .set("fill", "red")
-    .set("x",18)
-    .set("y",52)
+    .set("x",18*3)
+    .set("y",52*3)
     .add(bottom_text);
 
     let document = Document::new()
-    .set("viewBox", (0, 0, 70, 70))
+    .set("viewBox", (0, 0, 210, 210))
     .add(center_circle_path)
     .add(top_line_path)
     .add(bottom_line_path)
