@@ -1,0 +1,20 @@
+<svg viewBox="0 0 70 70" xmlns="http://www.w3.org/2000/svg">
+<path d="M35,10 c-25,0,-25,25,-25,25 c0,25,25,25,25,25 c25,0,25,-25,25,-25 c0,-25,-25,-25,-25,-25 z" fill="none" stroke="red" stroke-width="1.2"/>
+<path d="M11,28 l48,0" fill="none" stroke="red" stroke-width="1.2"/>
+<path d="M11,42 l48,0" fill="none" stroke="red" stroke-width="1.2"/>
+<text fill="red" font-family="Lucida-Console" font-size="7.5" x="12" y="37">
+2022/12/17
+</text>
+<text fill="red" font-family="sans-serif" font-size="6" x="20" y="20">
+山下商事
+
+</text>
+<text fill="red" font-family="sans-serif" font-size="5.5" x="14" y="26">
+第二営業部6課
+
+</text>
+<text fill="red" font-family="serif" font-size="8.5" x="18" y="52">
+山下三郎
+
+</text>
+</svg>
