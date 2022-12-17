@@ -12,6 +12,13 @@ use std::io::prelude::*;
 
 
 fn main() {
+    // check args
+    let args: Vec<String> = env::args().collect();
+    if (args.len() <= 1) {
+        println!("usage: {} [output file]", args[0]);
+        return;
+    }
+    
     // read config files
     let home = env::var("HOME").unwrap();
     let config_file_path  = format!("{}/.mydatestamp", home);
@@ -34,14 +41,6 @@ fn main() {
     print!("top line 1:{}", top_line_str);
     print!("top line 2:{}", top_line2_str);
     print!("username:{}", username_str);
-
-    // check args
-    let args: Vec<String> = env::args().collect();
-
-    if (args.len() <= 1) {
-        println!("usage: {} [your_name_and_affliation] [date] [output file]", args[0]);
-        return;
-    }
 
     let filename = &args[1];
 
