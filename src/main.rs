@@ -1,5 +1,6 @@
 
 use std::env;
+use std::io::stderr;
 use svg::Document;
 use svg::node::element::Path;
 use svg::node::element::path::Data;
@@ -12,7 +13,8 @@ fn main() {
     // check args
     let args: Vec<String> = env::args().collect();
     if args.len() <= 1 {
-        println!("usage: {} [output file]", args[0]);
+        let usage = format!("[Err] Args not found.\nusage: {} [output file]\n", args[0]);
+        stderr().write(&usage.as_bytes());
         return;
     }
 
@@ -20,7 +22,7 @@ fn main() {
     let home = env::var("HOME").unwrap();
     let config_file_path = format!("{}/.mydatestamp", home);
     if std::path::Path::new(&config_file_path).exists() == false {
-        println!("prepare property file(~/.mydatestamp)");
+        stderr().write(b"[Err] Property file not found. Please prepare your property file(~/.mydatestamp)\n");
         return;
     }
     println!("reading property file(~/.mydatestamp)");
@@ -40,6 +42,7 @@ fn main() {
     print!("username:{}", username_str);
     let filename = &args[1];
 
+    // build elements of SVG nodes
     let center_circle = Data::new()
         .move_to((105, 30))
         .cubic_curve_by(((-75, 0), (-75, 75), (-75, 75)))
@@ -97,6 +100,8 @@ fn main() {
         .set("y", 52 * 3)
         .add(bottom_text);
 
+
+    // add elements to document
     let document = Document::new()
         .set("viewBox", (0, 0, 210, 210))
         .add(center_circle_path)
@@ -107,6 +112,8 @@ fn main() {
         .add(top_text_label2)
         .add(bottom_label);
 
+    // write file
     svg::save(filename.to_owned(), &document).unwrap();
     println!("wrote {} file", filename);
+
 }
