@@ -31,9 +31,18 @@ $ cp target/release/mydatestamp.exe ~/myscripts/ (Pathが通っているとこ�
 ```
 とか書いて、UTF8で保存しておいてください。
 
-そうすれば、以下のように、実行すると、svgファイルが作成されます。
+そうすれば、以下のように、実行すると、svgファイルが作成されます。日付は自動で、実行された日が入ります。
 
 ```
-$ mydatestamp.exe test.svg
+$ mydatestamp test.svg
+``` 
+
+あとは、各環境で、svgからpngに変更するなどして使ってください。
+
+```
+$ convert -density 1200 -background none test.svg test.png
 ```
 
+* cygwinやUbuntuの入っているWin10とかでは、ImageMagickですかね。
+* Macでは、librsvgをbrewでインストールするのがいいかと
+* nodeでも、svg-png-converterとかで変換すればいいですかね。
