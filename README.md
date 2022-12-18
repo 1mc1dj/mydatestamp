@@ -15,7 +15,7 @@ DXの遅れた日本では、サラリーマンが書類に印鑑を捺印する
 
 そこで、そのために、コマンドで、日付印のsvgファイルを作成するコマンドを中身を公開する形で作りました。
 
-rustでmain.rsの１ファイルで、勢いで作ってます。
+Rustでmain.rsの１ファイルで、勢いで作ってます。
 
 バイナリのフリーソフトなどでは、マルウェア混入などの心配もあるでしょうから、コードで挙動を確認してから、ご利用するのがいいかと思います。
 
@@ -58,3 +58,6 @@ $ convert -density 1200 -background none test.svg test.png
 * cygwinやUbuntuの入っているWin10とかでは、ImageMagickですかね。
 * Macでは、librsvgをbrewでインストールするのがいいかと
 * nodeでも、svg-png-converterとかで変換すればいいですかね。
+* VSCのSVGビューワのプラグインでもPNG出力できるものがありますね。
+* Inkspaceをコマンドラインで使う方法もあります。
+
