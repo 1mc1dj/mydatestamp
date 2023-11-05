@@ -1,6 +1,7 @@
 
 use std::env;
 use std::io::stderr;
+use std::vec;
 use svg::Document;
 use svg::node::element::Path;
 use svg::node::element::path::Data;
@@ -14,7 +15,7 @@ fn main() {
     let args: Vec<String> = env::args().collect();
     if args.len() <= 1 {
         let usage = format!("[Err] Args not found.\nusage: {} [output file]\n", args[0]);
-        stderr().write(&usage.as_bytes());
+        let _ = stderr().write(&usage.as_bytes());
         return;
     }
 
@@ -22,7 +23,7 @@ fn main() {
     let home = env::var("HOME").unwrap();
     let config_file_path = format!("{}/.mydatestamp", home);
     if std::path::Path::new(&config_file_path).exists() == false {
-        stderr().write(b"[Err] Property file not found. Please prepare your property file(~/.mydatestamp)\n");
+        let _ = stderr().write(b"[Err] Property file not found. Please prepare your property file(~/.mydatestamp)\n");
         return;
     }
     println!("reading property file(~/.mydatestamp)");
@@ -30,16 +31,23 @@ fn main() {
     let f = File::open(&config_file_path).unwrap();
     let mut br = BufReader::new(f);
 
-    let mut top_line_str = String::new();
-    br.read_line(&mut top_line_str);
-    let mut top_line2_str = String::new();
-    br.read_line(&mut top_line2_str);
-    let mut username_str = String::new();
-    br.read_line(&mut username_str);
 
-    print!("top line 1:{}", top_line_str);
-    print!("top line 2:{}", top_line2_str);
-    print!("username:{}", username_str);
+    let mut lines = vec![String::from(""), String::from(""), String::from("")];
+    for i in 0..3 {
+        match br.read_line(&mut lines[i]) {
+            Ok(_) => {
+                // pass
+            }
+            Err(error) => {
+                println!("Failed to read line: {}", error);
+                return;
+            }
+        }    
+    }
+
+    print!("top line 1:{}", lines[0]);
+    print!("top line 2:{}", lines[1]);
+    print!("username:{}", lines[2]);
     let filename = &args[1];
 
     // build elements of SVG nodes
@@ -76,7 +84,7 @@ fn main() {
         date_text,
     );
 
-    let top_text = svg::node::Text::new(top_line_str);
+    let top_text = svg::node::Text::new(lines[0].clone());
     let top_text_label = text_base
         .clone()
         .set("x", 63)
@@ -84,7 +92,7 @@ fn main() {
         .set("font-size", 20)
         .add(top_text);
 
-    let top_text2 = svg::node::Text::new(top_line2_str);
+    let top_text2 = svg::node::Text::new(lines[1].clone());
     let top_text_label2 = text_base
         .clone()
         .set("x", 46)
@@ -92,7 +100,7 @@ fn main() {
         .set("font-size", 18)
         .add(top_text2);
 
-    let bottom_text = svg::node::Text::new(username_str);
+    let bottom_text = svg::node::Text::new(lines[2].clone());
     let bottom_label = text_base
         .clone()
         .set("font-family", "serif")
